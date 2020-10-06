@@ -1,0 +1,8 @@
+package-as: DataStore_Mails
+
+move-folders:
+ DataStore_Mails/DataStore_Mails: DataStore_Mails
+
+ignore:
+ - LICENCE.md
+ - README.md
