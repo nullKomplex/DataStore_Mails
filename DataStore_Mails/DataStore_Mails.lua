@@ -500,13 +500,14 @@ function addon:OnInitialize()
 end
 
 function addon:OnEnable()
-	addon:RegisterEvent("MAIL_SHOW", OnMailShow)
-	addon:RegisterEvent("BAG_UPDATE", OnBagUpdate)
-	
 	addon:SetupOptions()
 	if GetOption("CheckMailExpiry") then
 		addon:ScheduleTimer(CheckExpiries, 5)	-- check mail expiries 5 seconds later, to decrease the load at startup
 	end
+    
+    if IsRestrictedAccount() then return end
+	addon:RegisterEvent("MAIL_SHOW", OnMailShow)
+	addon:RegisterEvent("BAG_UPDATE", OnBagUpdate)
 end
 
 function addon:OnDisable()
