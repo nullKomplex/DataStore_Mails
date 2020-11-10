@@ -502,7 +502,7 @@ end
 function addon:OnEnable()
 	addon:SetupOptions()
 	if GetOption("CheckMailExpiry") then
-		addon:ScheduleTimer(CheckExpiries, 5)	-- check mail expiries 5 seconds later, to decrease the load at startup
+		addon:ScheduleTimer(CheckExpiries, 3)	-- check mail expiries 5 seconds later, to decrease the load at startup
 	end
     
     if IsRestrictedAccount() then return end
