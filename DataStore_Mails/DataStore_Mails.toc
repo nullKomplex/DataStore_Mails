@@ -1,4 +1,4 @@
-## Interface: 90001
+## Interface: 90002
 ## Title: DataStore_Mails
 ## Notes: Stores information about character mails
 ## Author: Thaoky (EU-Marécages de Zangar)
