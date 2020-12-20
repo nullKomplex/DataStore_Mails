@@ -355,6 +355,17 @@ local function _GetNumExpiredMails(character, threshold)
 	return count
 end
 
+local function _DeleteExpiredMails(character, threshold)
+    for i = 1, _GetNumMails(character) do
+        if _GetMailExpiry(character, i) < threshold then
+            table.remove(character.Mails, i)
+            _DeleteExpiredMails(character, threshold)
+            return
+        end
+    end
+end
+        
+
 local function _SaveMailToCache(character, mailMoney, mailBody, mailSubject, mailSender)
 	local mailIcon = (mailMoney > 0) and ICON_COIN or ICON_NOTE
 	
@@ -462,6 +473,7 @@ local function CheckExpiries()
       							addon:Print(format(L["EXPIRED_EMAILS_WARNING"], charName, realm))
       						end
       						addon:SendMessage("DATASTORE_MAIL_EXPIRY", character, key, threshold, numExpiredMails)
+                            _DeleteExpiredMails(character, threshold)
       					end
       				end
       			end
