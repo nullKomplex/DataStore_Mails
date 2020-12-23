@@ -356,13 +356,21 @@ local function _GetNumExpiredMails(character, threshold)
 end
 
 local function _DeleteExpiredMails(character, threshold)
+    -- recursion caused stack errors, so doing this as a new table instead
+    local newMails = {}
+    local newMailCache = {}
     for i = 1, _GetNumMails(character) do
-        if _GetMailExpiry(character, i) < threshold then
-            table.remove(character.Mails, i)
-            _DeleteExpiredMails(character, threshold)
-            return
+        if _GetMailExpiry(character, i) >= threshold then
+            if i <= #character.Mails then
+                table.insert(newMails, character.Mails[i])
+            else
+                local index = i - #character.Mails
+                table.insert(newMailCache, character.MailCache[index])
+            end
         end
     end
+    character.Mails = newMails
+    character.MailCache = newMailCache
 end
         
 
