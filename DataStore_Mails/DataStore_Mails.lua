@@ -355,12 +355,12 @@ local function _GetNumExpiredMails(character, threshold)
 	return count
 end
 
-local function _DeleteExpiredMails(character, threshold)
+local function _DeleteExpiredMails(character)
     -- recursion caused stack errors, so doing this as a new table instead
     local newMails = {}
     local newMailCache = {}
     for i = 1, _GetNumMails(character) do
-        if _GetMailExpiry(character, i) >= threshold then
+        if _GetMailExpiry(character, i) > 0 then
             if i <= #character.Mails then
                 table.insert(newMails, character.Mails[i])
             else
@@ -481,7 +481,7 @@ local function CheckExpiries()
       							addon:Print(format(L["EXPIRED_EMAILS_WARNING"], charName, realm))
       						end
       						addon:SendMessage("DATASTORE_MAIL_EXPIRY", character, key, threshold, numExpiredMails)
-                            _DeleteExpiredMails(character, threshold)
+                            _DeleteExpiredMails(character)
       					end
       				end
       			end
